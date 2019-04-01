@@ -9,17 +9,18 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 
 
-def stacked_bar_graphs(headings, labels, data_array1, data_array2,
-                       outputfilename, ymin=-6, ymax=6, sep=1.5, end=1.5):
+def stacked_bar_graphs(headings, labels, data_array1, data_array2, colours,
+                       output_filename, y_min=-6, y_max=6, separation=1.5, end=1.5):
     """
     Creates a bar graph from an array of data
     :param headings: column headings for each set of data
     :param labels: list of labels for each set of data
     :param data_array1: data array of the form (names, y1, y2, ...)
     :param data_array2: second data array of same shape
-    :param outputfilename: name of output plot
-    :param ymin: minimum y value
-    :param ymax: maximum y value
+    :param colours: list of colours for plot
+    :param output_filename: name of output plot
+    :param y_min: minimum y value
+    :param y_max: maximum y value
     """
 
     fig, ax = plt.subplots(figsize=(read_file.cm(24), read_file.cm(20)))
@@ -35,16 +36,16 @@ def stacked_bar_graphs(headings, labels, data_array1, data_array2,
     # Set position of bar on X axis
     bar_positions = np.arange(n_bars)
     for i in range(n_functionals):
-        ax.bar(bar_positions, data_values2[i], width=barWidth, label=headings[i+1])
+        ax.bar(bar_positions, data_values2[i], width=barWidth, label=headings[i+1], color=colours[i])
         ax.bar(bar_positions, data_values1[i], width=0.01, color='k')
-        bar_positions = np.array([x + sep * barWidth for x in bar_positions])
+        bar_positions = np.array([x + separation * barWidth for x in bar_positions])
 
     # Add xticks on the middle of the group bars
     plt.hlines(0, -2, 2, linewidth=1)
-    plt.xticks([r + (sep + 1) * barWidth for r in range(n_bars)], labels)
+    plt.xticks([r + (separation + 1) * barWidth for r in range(n_bars)], labels)
 
     ax.set_xlim(- barWidth, 2 - end * barWidth)
-    ax.set_ylim(ymin, ymax)
+    ax.set_ylim(y_min, y_max)
     ax.set_ylabel('Errors / $eV$')
 
     ax.xaxis.label.set_fontsize(24)
@@ -55,7 +56,7 @@ def stacked_bar_graphs(headings, labels, data_array1, data_array2,
     # Create legend & Show graphic
     plt.legend(fontsize=20, loc=4, ncol=2, frameon=False, columnspacing=0.2, borderaxespad=-0.2)
     plt.show()
-    fig.savefig(outputfilename)
+    fig.savefig(output_filename)
 
 
 if __name__ == '__main__':
