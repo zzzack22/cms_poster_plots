@@ -25,8 +25,10 @@ def readfile(file):
     f.close()
     return headings, columns
 
+
 def cm(length):
     return length /2.54
+
 
 def fractional_plot(headings, data_array, y_min, y_max):
     """
