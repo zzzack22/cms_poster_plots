@@ -9,6 +9,10 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
 
+def get_colours():
+    return ["#E00034", "#FFB612", "#34B233", "#9278D1", "#0CC6DE", "#E0249A", "#BED600", "#00C0B5"]
+
+
 def readfile(file):
     """
     Reads data from file
@@ -35,7 +39,8 @@ def fractional_plot(headings, data_array, y_min, y_max):
     Scatter plot for each column of data, with first column giving x vales
     :param headings: list of column headings for data titles
     :param data_array: Array in format ( x, y1, y2, ... )
-    :param dp: number of decimal places for y axis limits
+    :param y_min: minimum axis y value
+    :param y_max: maximum axis y value
     """
 
     n_cols = data_array.shape[0]
@@ -59,13 +64,13 @@ def fractional_plot(headings, data_array, y_min, y_max):
         ynew1 = f1(xnew[0:201])
         ynew2 = f2(xnew[201:])
         ynew = np.concatenate((ynew1, ynew2))
-        line = ax.plot(xnew, ynew, label=headings[i], linewidth=2)
+        line = ax.plot(xnew, ynew, label=headings[i], linewidth=3)
         lines.append(line)
 
     ax.xaxis.label.set_fontsize(24)
     ax.yaxis.label.set_fontsize(24)
 
-    plt.hlines(0, 9, 11, linestyle=':', linewidth=1)
+    plt.hlines(0, 9, 11, linestyle=':', linewidth=2)
     ax.legend(fontsize=20, loc=4, ncol=2, frameon=False, columnspacing=0.2, borderaxespad=-0.2)
     plt.show()
     fig.savefig("frac.pdf")
@@ -80,6 +85,7 @@ def get_data(file):
     titles, data = readfile(file)
     data = np.array(data)
     return titles, data
+
 
 if __name__ == '__main__':
     # Take filename from input
